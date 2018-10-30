@@ -4,12 +4,24 @@ g_lesHouchesBlocks = {}
 
 class LesHouchesBlock :
   def __init__ (self, name) :
+    """
+    Parameters
+    ----------
+    name: str
+      A name for this block
+    """
     self.name = name
     g_lesHouchesBlocks[name] = self
     self.externParamsByOrderBlock = {} # dictionary indexes are block nbrs
     self.orderBlock = 1
 
   def insertExternParam (self, param) :
+    """
+    Parameters
+    ----------
+    param: InternParam based class instance
+      The internal parameter to insert into this block
+    """
     if param.orderBlock is not None :
       if param.orderBlock in self.externParamsByOrderBlock :
         raise ValueError('Cannot insert duplicate external param %s' % param)
@@ -31,7 +43,7 @@ class PyRuleParam (ABC) :
     """
     Parameters
     ----------
-    interactionOrder: 2-tuple (string, number)
+    interactionOrder: 2-tuple (str, number) or array of 2-tuples
       Specifies the order of the parameter according to a specific interaction. 
       It refers to a pair with the interaction name, followed by the order, or a list of such pairs.
     """
@@ -39,11 +51,28 @@ class PyRuleParam (ABC) :
     self.interactionOrder = interactionOrder
 
 class ExternParam (PyRuleParam) :
+  """
+  External parameter
+  """
   def __init__ (self, 
     value = 1.0, # Real number
     blockName = 'FRBlock',
     interactionOrder = None,
     orderBlock = None) :
+
+    """
+    Parameters
+    ----------
+    value: floating point number
+      The real number value to assign to this parameter.
+    blockName: str
+      The name identifying the block associated with this parameter
+    interactionOrder: 2-tuple (str, number)
+      Specifies the order of the parameter according to a specific interaction. 
+      It refers to a pair with the interaction name, followed by the order, or a list of such pairs.
+    orderBlock: positive integer
+      Provides information about the position of an external parameter within a given Les Houches block.
+    """
 
     self.value = value
     self.orderBlock = orderBlock
@@ -93,7 +122,7 @@ class InternParam (PyRuleParam) :
 
 class ExternTensorParam (ExternParam) :
   """
-  Tensorial parameter.
+  Tensorial external parameter.
   """
   def __init__ (self,
     indices,
@@ -110,11 +139,13 @@ class ExternTensorParam (ExternParam) :
     """
     Parameters
     ----------
-    indices: A list of index types. E.g ['scalar', 'generation']
+    indices: Array of strings
+        An array of index types. E.g ['scalar', 'generation']
     value: numpy.matrix
+        The tensor values
     complexParameter: bool
-      Defines whether a parameter is a real (False) or complex (True) quantity.
-    interactionOrder: 2-tuple
+      Defines whether the parameter is a real (False) or complex (True) quantity.
+    interactionOrder: 2-tuple (str, number) or array of 2-tuples
       Specifies the order of the parameter according to a specific interaction. 
       It refers to a pair with the interaction name, followed by the order, or a list of such pairs.
     unitary: bool
@@ -140,7 +171,7 @@ class ExternTensorParam (ExternParam) :
 
 class InternTensorParam (ExternParam) :
   """
-  Tensorial parameter.
+  Tensorial internal parameter.
   """
   def __init__ (self,
     indices,
@@ -158,9 +189,10 @@ class InternTensorParam (ExternParam) :
     ----------
     indices: A list of index types. E.g ['scalar', 'generation']
     value: numpy.matrix
+        The tensor values
     complexParameter: bool
       Defines whether a parameter is a real (False) or complex (True) quantity.
-    interactionOrder: 2-tuple
+    interactionOrder: 2-tuple (str, number) or array of 2-tuples
       Specifies the order of the parameter according to a specific interaction. 
       It refers to a pair with the interaction name, followed by the order, or a list of such pairs.
     parameterName: str
