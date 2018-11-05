@@ -128,7 +128,7 @@ class Interpreter(InterpreterBase):
 
             self.stdout.write(self.prompt+readline.get_line_buffer())
             self.stdout.flush()
-        except Exception, error:
+        except Exception as error:
             if __debug__:
                  self.logger.error(error)
 
@@ -206,7 +206,7 @@ class Interpreter(InterpreterBase):
                 data = compfunc(Ntext, line, Nbegidx, endidx)
                 self.completion_matches = [p[to_rm:] for p in data 
                                               if len(p)>to_rm]
-             except Exception, error:
+             except Exception as error:
                  self.logger.error(error)
             else:
                 self.completion_prefix = ''
@@ -217,7 +217,7 @@ class Interpreter(InterpreterBase):
 
         try:
             return self.completion_matches[state]
-        except IndexError, error:
+        except IndexError as error:
             return None
 
     def correct_splitting(line):

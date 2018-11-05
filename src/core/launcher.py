@@ -26,7 +26,7 @@ def LaunchPyRules(version, date, pyrules_dir):
     ## Decoding options and arguments
     try:
         optlist,arglist = getopt.getopt(sys.argv[1:], 'DV', ['debug','version'])
-    except getopt.GetoptError, err:
+    except getopt.GetoptError as err:
          logger.error(err)
          Usage()
          sys.exit()

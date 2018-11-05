@@ -20,11 +20,13 @@ if not( (sys.version_info[0]==2 and sys.version_info[1]>6) or \
 
 # Adding the path to the pyrules source ot the python path
 pyrules_dir = os.path.split(os.path.dirname(os.path.realpath( __file__ )))[0]
-sys.path.insert(0, os.path.join(pyrules_dir, 'src'))
+sys.path.insert(0, os.path.normpath(pyrules_dir))
+#sys.path.insert(0, os.path.normpath(os.path.join(pyrules_dir, 'pyrules')))
 
 # Configuring the logger
 from src.logging import colored_log
 colored_log.Init()
+logging.getLogger('PyRules').debug(pyrules_dir)
 
 # Release version
 pyrules_version = "0.1.0"

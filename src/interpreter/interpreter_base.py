@@ -49,7 +49,6 @@ class InterpreterBase(cmd.Cmd):
 
         # Add the line to the history
         # except for a few commands
-        self.logger.debug(self.history)
         if not any([line.startswith(x) for x in ['history', '#', 'help']]):
             self.history.append(line)
 
