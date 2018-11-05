@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+################################################################################
+# MAIN PROGRAM
+################################################################################
+"""This is the main executable, a simple frontend to call the command line
+   interface scripts"""
+
+# packages
+import logging
+import os
+import sys
+
+# Checking if the correct release of Python is installed
+if not( (sys.version_info[0]==2 and sys.version_info[1]>6) or \
+  (sys.version_info[0]==3) ):
+    sys.exit('Python version '+ sys.version + ' is detected.\n' + \
+    'PyRules works only with Python 2.7 (or more recent) or Python 3.X.\n' + \
+    'Please upgrade your version of Python.')
+
+# Adding the path to the pyrules source ot the python path
+pyrules_dir = os.path.split(os.path.dirname(os.path.realpath( __file__ )))[0]
+sys.path.insert(0, os.path.join(pyrules_dir, 'src'))
+
+# Configuring the logger
+from src.logging import colored_log
+colored_log.Init()
+
+# Release version
+pyrules_version = "0.1.0"
+pyrules_date    = "2018/11/05"
+
+# starting the CLI
+from src.core.launcher import LaunchPyRules
+LaunchPyRules(pyrules_version, pyrules_date, pyrules_dir)
