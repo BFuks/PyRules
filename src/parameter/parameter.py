@@ -56,7 +56,7 @@ class ExternParam (PyRuleParam) :
 l    """
     def __init__ (self, 
       value = 1.0, # Real number
-      blockName = 'FRBlock',
+      blockName = 'PyRulesBlock',
       interactionOrder = None,
       orderBlock = None) :
 
@@ -127,14 +127,12 @@ class ExternTensorParam (ExternParam) :
     def __init__ (self,
         indices,
         value,
-        blockName = 'FRBlock',
-        orderBlock = None,
+        blockName,
         complexParameter = True,
         interactionOrder = None, # A 2-tupe (ExternParam, order)
         unitary = False,
         hermitian = False,
-        orthogonal = False,
-        allowSummation = False) :
+        orthogonal = False) :
 
         """
         Parameters
@@ -154,7 +152,6 @@ class ExternTensorParam (ExternParam) :
           True if parameter corresponds to Hermitian matrix
         orthogonal: bool
           True if parameter corresponds to orthogonal matrix
-        allowSummation: bool
         """
 
         self.indices = indices
@@ -162,12 +159,10 @@ class ExternTensorParam (ExternParam) :
         self.unitary = unitary
         self.hermitian = hermitian
         self.orthogonal = orthogonal
-        self.allowSummation = allowSummation
 
         super(ExternTensorParam, self).__init__(value, 
           blockName,
-          interactionOrder,
-          orderBlock)
+          interactionOrder)
 
 class InternTensorParam (ExternParam) :
     """
@@ -181,8 +176,7 @@ class InternTensorParam (ExternParam) :
         parameterName = None,
         unitary = False,
         hermitian = False,
-        orthogonal = False,
-        allowSummation = False) :
+        orthogonal = False) :
 
         """
         Parameters
@@ -203,14 +197,12 @@ class InternTensorParam (ExternParam) :
           True if parameter corresponds to Hermitian matrix
         orthogonal: bool
           True if parameter corresponds to orthogonal matrix
-        allowSummation: bool
         """
 
         self.indices = indices
         self.unitary = unitary
         self.hermitian = hermitian
         self.orthogonal = orthogonal
-        self.allowSummation = allowSummation
 
         super(InternTensorParam, self).__init__(value, 
           complexParameter,
